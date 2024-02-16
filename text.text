@@ -1,0 +1,22 @@
+PISTA - mínimo 6 pistas, com pelo menos 4 atributos:"id_pista","cidade","distancia","pais".
+
+Chat, estou a ciar um projeto utilizando apenas php, não será utilizado banco de dados, como eu poderia fazer para quando a pessoa criar o cadastro da pista, o id_pista já ser criado automaticamente.
+
+
+
+
+<?php
+class PistaController {
+
+    public function criarPista($pais, $estado, $cidade, $distancia) {
+        
+        
+        var_dump($pistas);
+        return $pistas;
+    }
+
+    public function getPistas() {
+        return $this->pistas;
+    }
+}
+?>

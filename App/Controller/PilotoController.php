@@ -1,8 +1,19 @@
 <?php
-class PistaController {
+require_once '../App/Model/PilotoModel.php';
 
-    public function criarPista($base, $altura) {
-        return ($base * $altura) / 2;
-    } 
+class PilotoController {
+    private $pilotoModel;
+
+    public function __construct() {
+        $this->pilotoModel = new PilotoModel();
+    }
+
+    public function criarPiloto($nome, $idade, $peso, $carro, $pais_pil) {
+        $this->pilotoModel->criarPiloto($nome, $idade, $peso, $carro, $pais_pil);
+    }
+
+    public function listarPilotos() {
+        return $this->pilotoModel->getPilotos();
+    }
 }
 ?>

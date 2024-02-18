@@ -1,8 +1,19 @@
 <?php
-class PistaController {
+require_once '../App/Model/CarroModel.php';
 
-    public function criarPista($base, $altura) {
-        return ($base * $altura) / 2;
-    } 
+class CarroController {
+    private $carroModel;
+
+    public function __construct() {
+        $this->carroModel = new CarroModel();
+    }
+
+    public function criarCarro($marca, $modelo, $ano, $potencia, $velocidade_max) {
+        $this->carroModel->criarCarro($marca, $modelo, $ano, $potencia, $velocidade_max);
+    }
+
+    public function listarCarros() {
+        return $this->carroModel->getCarros();
+    }
 }
 ?>

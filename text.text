@@ -20,3 +20,65 @@ class PistaController {
     }
 }
 ?>
+
+
+
+session_start(); // Iniciar a sessão (se ainda não estiver iniciada)
+
+if (isset($_GET['submit'])) {
+    $produto = $_GET['submit'];
+    $tipo = isset($_GET['Tipo']) ? $_GET['Tipo'] : '-----';
+    $tipo2 = isset($_GET['Tipo2']) ? $_GET['Tipo2'] : '-----';
+    $porcao = isset($_GET['Porcao']) ? $_GET['Porcao'] : '-----';
+
+    $produtosSelecionados = isset($_SESSION['produtosSelecionados']) ? $_SESSION['produtosSelecionados'] : array();
+    $produtoAtual = array(
+        'produto' => $produto,
+        'tipo' => $tipo,
+        'tipo2' => $tipo2,
+        'porcao' => $porcao
+    );
+    $produtosSelecionados[] = $produtoAtual;
+
+    $_SESSION['produtosSelecionados'] = $produtosSelecionados;
+}
+
+
+$pistas = [
+        [
+            'pais' => 10,
+            'cidade' => 'Pista 1',
+            'distancia' => 5000,
+            'superficie' => 'Asfalto'
+        ],
+        [
+            'cidade' => 'Pista 2',
+            'distancia' => 6000,
+            'pais' => 8,
+            'superficie' => 'Terra'
+        ],
+        [
+            'cidade' => 'Pista 3',
+            'distancia' => 4500,
+            'pais' => 12,
+            'superficie' => 'Asfalto'
+        ],
+        [
+            'cidade' => 'Pista 4',
+            'distancia' => 7000,
+            'pais' => 6,
+            'superficie' => 'Asfalto'
+        ],
+        [
+            'cidade' => 'Pista 5',
+            'distancia' => 5500,
+            'pais' => 9,
+            'superficie' => 'Terra'
+        ],
+        [
+            'cidade' => 'Pista 6',
+            'distancia' => 8000,
+            'pais' => 5,
+            'superficie' => 'Asfalto'
+        ]
+    ];

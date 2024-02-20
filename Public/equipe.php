@@ -27,9 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $titulos = isset($_POST['titulos']) ? $_POST['titulos'] : '-----';
     $piloto = isset($_POST['piloto']) ? $_POST['piloto'] : '-----';
     $piloto2 = isset($_POST['piloto2']) ? $_POST['piloto2'] : '-----';
+    $ultimoId = isset($_SESSION['ultimoIdE']) ? $_SESSION['ultimoIdE'] : 0;
+    $ultimoId++;
 
     $equipesCadastradas = isset($_SESSION['equipesCadastradas']) ? $_SESSION['equipesCadastradas'] : array();
     $novaEquipe = array(
+        'id' => $ultimoId,
         'nome_equipe' => $nome_equipe,
         'pais_equipe' => $pais_equipe,
         'chefe' => $chefe,
@@ -41,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $equipesCadastradas[] = $novaEquipe;
 
     $_SESSION['equipesCadastradas'] = $equipesCadastradas;
+    $_SESSION['ultimoIdE'] = $ultimoId;
 }
 
 
@@ -65,7 +69,7 @@ $equipes = $equipeController->listarEquipes();
                 <input type="text" name="pais_equipe" placeholder="País da Equipe">
                 <input type="text" name="chefe" placeholder="Líder">
                 <input type="text" name="patrocinadores" placeholder="Patrocinadores">
-                <input type="text" name="titulos" placeholder="Títulos">
+                <input type="number" name="titulos" placeholder="Títulos">
                 <select name="piloto">
                     <?php 
                     $pilotosSelecionados = array();
@@ -106,16 +110,24 @@ $equipes = $equipeController->listarEquipes();
         <fieldset>
             <legend><h1>Equipes Cadastradas</h1></legend>
             <ul>
-                <?php foreach ($_SESSION['equipesCadastradas'] as $key => $equipe): ?>
-                    <li>
-                        <?php echo "Nome da Equipe: " . $equipe['nome_equipe'] . ", País da Equipe: " . $equipe['pais_equipe'] . ", Líder: " . $equipe['chefe']
-                         . ", Patrocinadores: " . $equipe['patrocinadores'] . ", Títulos: " . $equipe['titulos'] . " Exemplares, 1º Piloto: " . $equipe['piloto'] . ", 2º Piloto: " . $equipe['piloto2']; ?>
-                        <form action="../App/Resources/deletar3.php" method="post">
-                            <input type="hidden" name="equipe_key" value="<?php echo $key; ?>">
-                            <button type='submit'>Remover</button>
-                        </form>
-                    </li>
-                <?php endforeach; ?>
+                <?php if (isset($_SESSION['equipesCadastradas'])): ?>
+                    <?php foreach ($_SESSION['equipesCadastradas'] as $key => $equipe): ?>
+                        <li>
+                            <?php echo "ID:" . $equipe['id'] . ", Nome da Equipe: " . $equipe['nome_equipe'] . ", País da Equipe: " . $equipe['pais_equipe'] . ", Líder: " . $equipe['chefe']
+                             . ", Patrocinadores: " . $equipe['patrocinadores'] . ", Títulos: " . $equipe['titulos'] . " Exemplares, 1º Piloto: " . $equipe['piloto'] . ", 2º Piloto: " . $equipe['piloto2']; ?>
+                            <form action="../App/Resources/deletar3.php" method="post">
+                                <input type="hidden" name="equipe_key" value="<?php echo $key; ?>">
+                                <button type='submit'>Remover</button>
+                            </form>
+                            <form action="../App/Resources/editar3.php" method="post">
+                                <input type="hidden" name="equipe_key" value="<?php echo $key; ?>">
+                                <button type='submit'>Editar</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>Nenhuma equipe cadastrada</li>
+                <?php endif; ?>
             </ul>
         </fieldset>
     </section>

@@ -1,9 +1,13 @@
 <?php
 class PistaModel {
     private $pistas = [];
+    private static $ultimoId = 0;
 
     public function criarPista($pais, $estado, $cidade, $distancia) {
+        self::$ultimoId++;
+
         $novaPista = array(
+            'id' => self::$ultimoId,
             'pais' => $pais,
             'estado' => $estado,
             'cidade' => $cidade,
@@ -17,4 +21,5 @@ class PistaModel {
         return $this->pistas;
     }
 }
+
 ?>

@@ -23,9 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ano = isset($_POST['ano']) ? $_POST['ano'] : '-----';
     $potencia = isset($_POST['potencia']) ? $_POST['potencia'] : '-----';
     $velocidade_max = isset($_POST['velocidade_max']) ? $_POST['velocidade_max'] : '-----';
+    $ultimoId = isset($_SESSION['ultimoIdCa']) ? $_SESSION['ultimoIdCa'] : 0;
+    $ultimoId++;
 
     $carrosCadastrados = isset($_SESSION['carrosCadastrados']) ? $_SESSION['carrosCadastrados'] : array();
     $novaCarro = array(
+        'id' => $ultimoId,
         'marca' => $marca,
         'modelo' => $modelo,
         'ano' => $ano,
@@ -35,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $carrosCadastrados[] = $novaCarro;
 
     $_SESSION['carrosCadastrados'] = $carrosCadastrados;
+    $_SESSION['ultimoIdCa'] = $ultimoId;
 }
 
 
@@ -69,15 +73,23 @@ $carros = $carroController->listarCarros();
         <fieldset>
             <legend><h1>Carros Cadastradas</h1></legend>
             <ul>
-                <?php foreach ($_SESSION['carrosCadastrados'] as $key => $carro): ?>
-                    <li>
-                        <?php echo "Marca: " . $carro['marca'] . ", Modelo: " . $carro['modelo'] . ", Ano: " . $carro['ano'] . ", Potência: " . $carro['potencia'] . " cv, Velocidade Máxima: " . $carro['velocidade_max'] . "km/h"; ?>
-                        <form action="../App/Resources/deletar5.php" method="post">
-                            <input type="hidden" name="carro_key" value="<?php echo $key; ?>">
-                            <button type='submit'>Remover</button>
-                        </form>
-                    </li>
-                <?php endforeach; ?>
+                <?php if(isset($_SESSION['carrosCadastrados'])): ?>
+                    <?php foreach ($_SESSION['carrosCadastrados'] as $key => $carro): ?>
+                        <li>
+                            <?php echo "ID:" . $carro['id'] . ", Marca: " . $carro['marca'] . ", Modelo: " . $carro['modelo'] . ", Ano: " . $carro['ano'] . ", Potência: " . $carro['potencia'] . " cv, Velocidade Máxima: " . $carro['velocidade_max'] . "km/h"; ?>
+                            <form action="../App/Resources/deletar5.php" method="post">
+                                <input type="hidden" name="carro_key" value="<?php echo $key; ?>">
+                                <button type='submit'>Remover</button>
+                            </form>
+                            <form action="../App/Resources/editar5.php" method="post">
+                                <input type="hidden" name="carro_key" value="<?php echo $key; ?>">
+                                <button type='submit'>Editar</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>Nenhum carro cadastrado</li>
+                <?php endif; ?>
             </ul>
         </fieldset>
     </section>

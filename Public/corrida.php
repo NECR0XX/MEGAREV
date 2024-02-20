@@ -50,7 +50,7 @@ $pistas = $pistaController->listarPistas();
     <a href="index.php">Voltar</a>
     <section>
         <fieldset>
-            <legend><h1>Cadastro de Pistas</h1></legend>
+            <legend><h1>Cadastro de Corridas</h1></legend>
             <form method="post">
                 <input type="text" name="pais" placeholder="País">
                 <input type="text" name="estado" placeholder="Estado">
@@ -63,17 +63,25 @@ $pistas = $pistaController->listarPistas();
 
     <section>
         <fieldset>
-            <legend><h1>Pistas Cadastradas</h1></legend>
+            <legend><h1>Corridas Cadastradas</h1></legend>
             <ul>
-                <?php foreach ($_SESSION['pistasCadastradas'] as $key => $pista): ?>
-                    <li>
-                        <?php echo "País: " . $pista['pais'] . ", Estado: " . $pista['estado'] . ", Cidade: " . $pista['cidade'] . ", Distância: " . $pista['distancia']; ?>
-                        <form action="../App/Resources/deletar4.php" method="post">
-                            <input type="hidden" name="corrida_key" value="<?php echo $key; ?>">
-                            <button type='submit'>Remover</button>
-                        </form>
-                    </li>
-                <?php endforeach; ?>
+                <?php if (isset($_SESSION['pistasCadastradas'])): ?>
+                    <?php foreach ($_SESSION['pistasCadastradas'] as $key => $pista): ?>
+                        <li>
+                            <?php echo "ID: " . $pista['id'] . ", País: " . $pista['pais'] . ", Estado: " . $pista['estado'] . ", Cidade: " . $pista['cidade'] . ", Distância: " . $pista['distancia']; ?>
+                            <form action="../App/Resources/deletar4.php" method="post">
+                                <input type="hidden" name="corrida_key" value="<?php echo $key; ?>">
+                                <button type='submit'>Remover</button>
+                            </form>
+                            <form action="../App/Resources/editar4.php" method="post">
+                                <input type="hidden" name="corrida_key" value="<?php echo $key; ?>">
+                                <button type='submit'>Editar</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>Nenhuma corrida cadastrada</li>
+                <?php endif; ?>
             </ul>
         </fieldset>
     </section>

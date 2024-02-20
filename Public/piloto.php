@@ -23,9 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $peso = isset($_POST['peso']) ? $_POST['peso'] : '-----';
     $carro = isset($_POST['carro']) ? $_POST['carro'] : '-----';
     $pais_pil = isset($_POST['pais_pil']) ? $_POST['pais_pil'] : '-----';
+    $ultimoId = isset($_SESSION['ultimoIdPi']) ? $_SESSION['ultimoIdPi'] : 0;
+    $ultimoId++;
 
     $pilotosCadastrados = isset($_SESSION['pilotosCadastrados']) ? $_SESSION['pilotosCadastrados'] : array();
     $novaPiloto = array(
+        'id' => $ultimoId,
         'nome' => $nome,
         'idade' => $idade,
         'peso' => $peso,
@@ -35,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pilotosCadastrados[] = $novaPiloto;
 
     $_SESSION['pilotosCadastrados'] = $pilotosCadastrados;
+    $_SESSION['ultimoIdPi'] = $ultimoId;
 }
 
 
@@ -77,20 +81,27 @@ $pilotos = $pilotoController->listarPilotos();
             </form>
         </fieldset>
     </section>
-
     <section>
         <fieldset>
             <legend><h1>Pilotos Cadastradas</h1></legend>
             <ul>
-                <?php foreach ($_SESSION['pilotosCadastrados'] as $key => $piloto): ?>
-                    <li>
-                        <?php echo "Nome: " . $piloto['nome'] . ", Idade: " . $piloto['idade'] . " Anos, Peso: " . $piloto['peso'] . "Kg, Carro: " . $piloto['carro'] . ", País: " . $piloto['pais_pil']; ?>
-                        <form action="../App/Resources/deletar2.php" method="post">
-                            <input type="hidden" name="piloto_key" value="<?php echo $key; ?>">
-                            <button type='submit'>Remover</button>
-                        </form>
-                    </li>
-                <?php endforeach; ?>
+                <?php if (isset($_SESSION['pilotosCadastrados'])): ?>
+                    <?php foreach ($_SESSION['pilotosCadastrados'] as $key => $piloto): ?>
+                        <li>
+                            <?php echo "ID: " . $piloto['id'] . ", Nome: " . $piloto['nome'] . ", Idade: " . $piloto['idade'] . " Anos, Peso: " . $piloto['peso'] . "Kg, Carro: " . $piloto['carro'] . ", País: " . $piloto['pais_pil']; ?>
+                            <form action="../App/Resources/deletar2.php" method="post">
+                                <input type="hidden" name="piloto_key" value="<?php echo $key; ?>">
+                                <button type='submit'>Remover</button>
+                            </form>
+                            <form action="../App/Resources/editar2.php" method="post">
+                                <input type="hidden" name="piloto_key" value="<?php echo $key; ?>">
+                                <button type='submit'>Editar</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>Nenhum Piloto Cadastrado</li>
+                <?php endif; ?>
             </ul>
         </fieldset>
     </section>

@@ -60,6 +60,7 @@ $corridas = $corridaController->listarCorridas();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Resources/Css/pista.css">
     <title>Document</title>
 </head>
 <body>
@@ -203,10 +204,6 @@ $corridas = $corridaController->listarCorridas();
                             <form action="../App/Resources/deletar4.php" method="post">
                                 <input type="hidden" name="corrida_key" value="<?php echo $key; ?>">
                                 <button type='submit'>Remover</button>
-                            </form>
-                            <form action="../App/Resources/editar4.php" method="post">
-                                <input type="hidden" name="corrida_key" value="<?php echo $key; ?>">
-                                <button type='submit'>Editar</button>
                             </form>
                             <form action="../App/Resources/iniciar_corrida.php" method="post">
                                 <button type="submit" name="iniciar_corrida">Iniciar Corrida</button>

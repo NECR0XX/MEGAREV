@@ -5,11 +5,11 @@ $pistaController = new PistaController();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['pais']) && 
-        isset($_POST['estado']) &&
+        isset($_POST['tipo']) &&
         isset($_POST['cidade']) &&
         isset($_POST['distancia'])) 
     {
-        $pistaController->criarPista($_POST['pais'], $_POST['estado'], $_POST['cidade'], $_POST['distancia']);
+        $pistaController->criarPista($_POST['pais'], $_POST['tipo'], $_POST['cidade'], $_POST['distancia']);
         header('Location: #');
     }
 }
@@ -18,7 +18,7 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pais = isset($_POST['pais']) ? $_POST['pais'] : '-----';
-    $estado = isset($_POST['estado']) ? $_POST['estado'] : '-----';
+    $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : '-----';
     $cidade = isset($_POST['cidade']) ? $_POST['cidade'] : '-----';
     $distancia = isset($_POST['distancia']) ? $_POST['distancia'] : '-----';
     $ultimoId = isset($_SESSION['ultimoId']) ? $_SESSION['ultimoId'] : 0;
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $novaPista = array(
         'id' => $ultimoId,
         'pais' => $pais,
-        'estado' => $estado,
+        'tipo' => $tipo,
         'cidade' => $cidade,
         'distancia' => $distancia
     );
@@ -55,9 +55,13 @@ $pistas = $pistaController->listarPistas();
             <legend><h1>Cadastro de Pistas</h1></legend>
             <form method="post">
                 <input type="text" name="pais" placeholder="País">
-                <input type="text" name="estado" placeholder="Estado">
+                <select name="tipo">
+                    <option value="Asfalto">Asfalto</option>
+                    <option value="Terra">Terra</option>
+                    <option value="Grama">Grama</option>
+                </select>
                 <input type="text" name="cidade" placeholder="Cidade">
-                <input type="number" name="distancia" placeholder="Distância">
+                <input type="number" name="distancia" placeholder="Distância" min="0">
                 <input type="submit" value="Enviar">
             </form>
         </fieldset>
@@ -69,7 +73,7 @@ $pistas = $pistaController->listarPistas();
                 <?php if(isset($_SESSION['pistasCadastradas'])): ?>
                     <?php foreach ($_SESSION['pistasCadastradas'] as $key => $pista): ?>
                         <li>
-                            <?php echo "ID: " . $pista['id'] . ", País: " . $pista['pais'] . ", Estado: " . $pista['estado'] . ", Cidade: " . $pista['cidade'] . ", Distância: " . $pista['distancia'] . "Km"; ?>
+                            <?php echo "<strong>ID:</strong> " . $pista['id'] . ", <strong>País:</strong> " . $pista['pais'] . ", <strong>tipo:</strong> " . $pista['tipo'] . ", <strong>Cidade:</strong> " . $pista['cidade'] . ", <strong>Distância:</strong> " . $pista['distancia'] . "Km"; ?>
                             <form action="../App/Resources/deletar.php" method="post">
                                 <input type="hidden" name="pista_key" value="<?php echo $key; ?>">
                                 <button type='submit'>Remover</button>

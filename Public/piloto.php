@@ -60,8 +60,8 @@ $pilotos = $pilotoController->listarPilotos();
             <legend><h1>Cadastro de Pilotos</h1></legend>
             <form method="post">
                 <input type="text" name="nome" placeholder="Nome">
-                <input type="number" name="idade" placeholder="Idade">
-                <input type="number" name="peso" placeholder="Peso">
+                <input type="number" name="idade" placeholder="Idade" min="0">
+                <input type="number" name="peso" placeholder="Peso" min="0">
                 <select name="carro">
                     <?php 
                     $marcasSelecionadas = array();
@@ -88,7 +88,9 @@ $pilotos = $pilotoController->listarPilotos();
                 <?php if (isset($_SESSION['pilotosCadastrados'])): ?>
                     <?php foreach ($_SESSION['pilotosCadastrados'] as $key => $piloto): ?>
                         <li>
-                            <?php echo "ID: " . $piloto['id'] . ", Nome: " . $piloto['nome'] . ", Idade: " . $piloto['idade'] . " Anos, Peso: " . $piloto['peso'] . "Kg, Carro: " . $piloto['carro'] . ", País: " . $piloto['pais_pil']; ?>
+                            <?php echo "<strong>ID:</strong> " . $piloto['id'] . ", <strong>Nome:</strong> " . $piloto['nome'] . ", <strong>Idade:</strong> " . 
+                            $piloto['idade'] . " Anos, <strong>Peso:</strong> " . $piloto['peso'] . "Kg, <strong>Carro:</strong> " . 
+                            $piloto['carro'] . ", <strong>País:</strong> " . $piloto['pais_pil']; ?>
                             <form action="../App/Resources/deletar2.php" method="post">
                                 <input type="hidden" name="piloto_key" value="<?php echo $key; ?>">
                                 <button type='submit'>Remover</button>

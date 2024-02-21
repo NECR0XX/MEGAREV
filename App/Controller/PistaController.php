@@ -8,8 +8,8 @@ class PistaController {
         $this->pistaModel = new PistaModel();
     }
 
-    public function criarPista($pais, $estado, $cidade, $distancia) {
-        $this->pistaModel->criarPista($pais, $estado, $cidade, $distancia);
+    public function criarPista($pais, $tipo, $cidade, $distancia) {
+        $this->pistaModel->criarPista($pais, $tipo, $cidade, $distancia);
     }
 
     public function listarPistas() {

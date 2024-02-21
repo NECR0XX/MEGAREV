@@ -1,25 +1,27 @@
 <?php
-class PilotoModel {
-    private $pilotos = [];
+class CorridaModel {
+    private $corridas = [];
     private static $ultimoId = 0;
 
-    public function criarPiloto($nome, $idade, $peso, $carro, $equipe) {
+    public function criarCorrida($nome, $pista, $equipe1, $equipe2, $equipe3, $equipe4, $equipe5) {
         self::$ultimoId++;
 
-        $novaPiloto = array(
+        $novaCorrida = array(
             'id' => self::$ultimoId,
             'nome' => $nome,
-            'idade' => $idade,
-            'peso' => $peso,
-            'carro' => $carro,
-            'equipe' => $equipe
+            'pista' => $pista,
+            'equipe1' => $equipe1,
+            'equipe2' => $equipe2,
+            'equipe3' => $equipe3,
+            'equipe4' => $equipe4,
+            'equipe5' => $equipe5
         );
 
-        $this->pilotos[] = $novaPiloto;
+        $this->corridas[] = $novaCorrida;
     }
 
-    public function getPilotos() {
-        return $this->pilotos;
+    public function getCorridas() {
+        return $this->corridas;
     }
 }
 ?>

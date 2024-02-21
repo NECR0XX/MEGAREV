@@ -1,19 +1,19 @@
 <?php
-require_once '../App/Model/PilotoModel.php';
+require_once '../App/Model/CorridaModel.php';
 
-class PilotoController {
-    private $pilotoModel;
+class CorridaController {
+    private $corridaModel;
 
     public function __construct() {
-        $this->pilotoModel = new PilotoModel();
+        $this->corridaModel = new CorridaModel();
     }
 
-    public function criarPiloto($nome, $idade, $peso, $carro, $equipe) {
-        $this->pilotoModel->criarPiloto($nome, $idade, $peso, $carro, $equipe);
+    public function criarCorrida($nome, $pista, $equipe1, $equipe2, $equipe3, $equipe4, $equipe5) {
+        $this->corridaModel->criarCorrida($nome, $pista, $equipe1, $equipe2, $equipe3, $equipe4, $equipe5);
     }
 
-    public function listarPilotos() {
-        return $this->pilotoModel->getPilotos();
+    public function listarCorridas() {
+        return $this->corridaModel->getCorridas();
     }
 }
 ?>

@@ -61,9 +61,9 @@ $carros = $carroController->listarCarros();
             <form method="post">
                 <input type="text" name="marca" placeholder="Marca">
                 <input type="text" name="modelo" placeholder="Modelo">
-                <input type="number" name="ano" placeholder="Ano">
-                <input type="number" name="potencia" placeholder="Potência">
-                <input type="number" name="velocidade_max" placeholder="Velocidade Máxima">
+                <input type="number" name="ano" placeholder="Ano" min="0">
+                <input type="number" name="potencia" placeholder="Potência" min="0">
+                <input type="number" name="velocidade_max" placeholder="Velocidade Máxima" min="0">
                 <input type="submit" value="Enviar">
             </form>
         </fieldset>
@@ -76,7 +76,9 @@ $carros = $carroController->listarCarros();
                 <?php if(isset($_SESSION['carrosCadastrados'])): ?>
                     <?php foreach ($_SESSION['carrosCadastrados'] as $key => $carro): ?>
                         <li>
-                            <?php echo "ID:" . $carro['id'] . ", Marca: " . $carro['marca'] . ", Modelo: " . $carro['modelo'] . ", Ano: " . $carro['ano'] . ", Potência: " . $carro['potencia'] . " cv, Velocidade Máxima: " . $carro['velocidade_max'] . "km/h"; ?>
+                            <?php echo "<strong>ID:</strong>" . $carro['id'] . ", <strong>Marca:</strong> " . $carro['marca'] . ", <strong>Modelo:</strong> " . 
+                            $carro['modelo'] . ", <strong>Ano:</strong> " . $carro['ano'] . ", <strong>Potência:</strong> " . 
+                            $carro['potencia'] . " cv, <strong>Velocidade Máxima:</strong> " . $carro['velocidade_max'] . "km/h"; ?>
                             <form action="../App/Resources/deletar5.php" method="post">
                                 <input type="hidden" name="carro_key" value="<?php echo $key; ?>">
                                 <button type='submit'>Remover</button>

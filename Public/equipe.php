@@ -69,7 +69,7 @@ $equipes = $equipeController->listarEquipes();
                 <input type="text" name="pais_equipe" placeholder="País da Equipe">
                 <input type="text" name="chefe" placeholder="Líder">
                 <input type="text" name="patrocinadores" placeholder="Patrocinadores">
-                <input type="number" name="titulos" placeholder="Títulos">
+                <input type="number" name="titulos" placeholder="Títulos" min="0">
                 <select name="piloto">
                     <?php 
                     $pilotosSelecionados = array();
@@ -113,8 +113,10 @@ $equipes = $equipeController->listarEquipes();
                 <?php if (isset($_SESSION['equipesCadastradas'])): ?>
                     <?php foreach ($_SESSION['equipesCadastradas'] as $key => $equipe): ?>
                         <li>
-                            <?php echo "ID:" . $equipe['id'] . ", Nome da Equipe: " . $equipe['nome_equipe'] . ", País da Equipe: " . $equipe['pais_equipe'] . ", Líder: " . $equipe['chefe']
-                             . ", Patrocinadores: " . $equipe['patrocinadores'] . ", Títulos: " . $equipe['titulos'] . " Exemplares, 1º Piloto: " . $equipe['piloto'] . ", 2º Piloto: " . $equipe['piloto2']; ?>
+                            <?php echo "<strong>ID:</strong>" . $equipe['id'] . ", <strong>Nome da Equipe:</strong> " . $equipe['nome_equipe'] . ", <strong>País da Equipe:</strong> " . 
+                            $equipe['pais_equipe'] . ", <strong>Líder:</strong> " . $equipe['chefe'] . ", <strong>Patrocinadores:</strong> " . 
+                            $equipe['patrocinadores'] . ", <strong>Títulos:</strong> " . $equipe['titulos'] . " Exemplares, <strong>1º Piloto:</strong> " . 
+                            $equipe['piloto'] . ", <strong>2º Piloto:</strong> " . $equipe['piloto2']; ?>
                             <form action="../App/Resources/deletar3.php" method="post">
                                 <input type="hidden" name="equipe_key" value="<?php echo $key; ?>">
                                 <button type='submit'>Remover</button>
